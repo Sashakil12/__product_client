@@ -1,6 +1,4 @@
-
-
-import React,{ useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -12,7 +10,8 @@ import {
   Divider,
   Button,
   useToast,
-  InputGroup, InputRightElement, 
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 
 import { Formik, Form, Field } from "formik";
@@ -20,14 +19,11 @@ import * as Yup from "yup";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { useNavigate, Link } from "react-router-dom";
 
-
-
 const LoginSchema = Yup.object().shape({
-  email: Yup.string()
+  userName: Yup.string()
+    .trim()
     .required("Required")
-    .matches(
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    ),
+    .matches(/^[0-9a-z]+$/, "You can use a-z, A-z, 0-9 only"),
   password: Yup.string()
     .min(8, "Too short!")
     .max(16, "Too long!")
@@ -36,19 +32,17 @@ const LoginSchema = Yup.object().shape({
 
 //component
 function LogIn({ logIn, user }) {
-  const [show, setShow] = useState(false)
-  const handleClick = () => setShow(!show)
-  
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
+
   const toast = useToast();
   const navigate = useNavigate();
   const handleSubmit = (val, act) => {
     // logIn(val, toast, act.setSubmitting, router, setCookie);
   };
- 
+
   return (
     <div>
-      
-
       <Flex
         justify="start"
         direction="column"
@@ -56,28 +50,28 @@ function LogIn({ logIn, user }) {
         w={{ base: "90%", md: "70%", lg: "60%", xl: "40%" }}
       >
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ userName: "", password: "" }}
           validationSchema={LoginSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
             <Form>
-              <Field type="email" name="email">
+              <Field type="text" name="userName">
                 {({ field, form }) => (
                   <FormControl
-                    isInvalid={form.errors.email && form.touched.email}
-                    id="email"
+                    isInvalid={form.errors.userName && form.touched.userName}
+                    id="login-username"
                     isRequired
                   >
-                    <FormLabel htmlFor="email">Email address</FormLabel>
+                    <FormLabel htmlFor="email">User name:</FormLabel>
                     <Input
                       {...field}
-                      id="email"
-                      placeholder="you@mail.com"
-                      type="email"
+                      id="login-username"
+                      placeholder="enter user name"
+                      type="text"
                     />
-                    <FormHelperText>Enter your email above.</FormHelperText>
-                    <FormErrorMessage>Invalid Email!</FormErrorMessage>
+                    <FormHelperText>Choose a user name.</FormHelperText>
+                    <FormErrorMessage>{form.errors.userName}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
@@ -86,26 +80,28 @@ function LogIn({ logIn, user }) {
                   return (
                     <FormControl
                       isInvalid={form.errors.password && form.touched.password}
-                      id="password"
+                      id="login-password"
                       isRequired
                     >
                       <FormLabel>Password</FormLabel>
                       <InputGroup size="md">
-                      <Input
-                      {...field}
-                        id="password"
-                        minLength={8}
-                        pr="4.5rem"
-                        type={show ? "text" : "password"}
-                        placeholder="Enter password"
-                      />
-                      <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                          {show ? "Hide" : "Show"}
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
-                      <FormHelperText>Your password! (min 8 char)</FormHelperText>
+                        <Input
+                          {...field}
+                          id="login-password-label"
+                          minLength={8}
+                          pr="4.5rem"
+                          type={show ? "text" : "password"}
+                          placeholder="Enter password"
+                        />
+                        <InputRightElement width="4.5rem">
+                          <Button h="1.75rem" size="sm" onClick={handleClick}>
+                            {show ? "Hide" : "Show"}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+                      <FormHelperText>
+                        Your password! (min 8 char)
+                      </FormHelperText>
                       <FormErrorMessage>
                         {form.errors.password}
                       </FormErrorMessage>
@@ -125,7 +121,6 @@ function LogIn({ logIn, user }) {
             </Form>
           )}
         </Formik>
-        
       </Flex>
     </div>
   );

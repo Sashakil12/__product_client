@@ -12,9 +12,9 @@ import SignUp from "./../../components/Register/Register.component";
 
 function Auth() {
   return (
-    <Center minW="80vw">
+    <Center mt="3vh" minW="80vw">
       <Tabs>
-        <TabList>
+        <TabList justifyContent={"center"}>
           <Tab>Log In</Tab>
           <Tab>Sign Up</Tab>
         </TabList>

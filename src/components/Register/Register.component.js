@@ -15,20 +15,18 @@ import {
   InputGroup,
   InputRightElement,
   InputGroupProps,
-  InputLeftAddon
+  InputLeftAddon,
 } from "@chakra-ui/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { ChevronRightIcon } from "@chakra-ui/icons";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const signUpSchema = Yup.object().shape({
-  email: Yup.string()
-    .required("Required")
-    .matches(
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    ),
+  userName: Yup.string().required("Required").trim()
+  .matches(/^[0-9a-z]+$/, "You can use a-z, A-z, 0-9 only"),
   password: Yup.string()
+    .trim()
     .min(8, "Too short!")
     .max(16, "Too long!")
     .required("Required"),
@@ -39,12 +37,6 @@ const signUpSchema = Yup.object().shape({
       return this.parent.password === value;
     }
   ),
-  phone: Yup.string()
-    .min(11, "Enter a (minimum) 11 digit BD phone number")
-    .max(11, "More than 11 digits!")
-    .required("You must enter a phone number!"),
-  name: Yup.string().min(3, "Too short!").max(75, "Too long!").required(),
-  subscribed: Yup.boolean().oneOf([true, false]),
 });
 
 //Component
@@ -52,47 +44,45 @@ function SignUp({ signUp, user }) {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
-  
+
   const navigate = useNavigate();
 
   const handleSubmit = (val, act) => {
-    console.log("handle submit clicked")
+    console.log("handle submit clicked");
     // signUp(val, toast, act.setSubmitting, router, setCookie);
   };
 
   return (
     <div>
-      
       <Flex
         justify="start"
         direction="column"
         mx="auto"
         w={{ base: "90%", md: "70%", lg: "60%", xl: "40%" }}
       >
-        
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{ userName: "", password: "", confirmPassword: "" }}
           validationSchema={signUpSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
             <Form>
-              <Field type="email" name="email">
+               <Field type="text" name="userName">
                 {({ field, form }) => (
                   <FormControl
-                    isInvalid={form.errors.email && form.touched.email}
-                    id="email"
+                    isInvalid={form.errors.userName && form.touched.userName}
+                    id="signup-username"
                     isRequired
                   >
-                    <FormLabel htmlFor="email">Email address</FormLabel>
+                    <FormLabel htmlFor="email">User name:</FormLabel>
                     <Input
                       {...field}
-                      id="email"
-                      placeholder="you@mail.com"
-                      type="email"
+                      id="signup-username"
+                      placeholder="enter user name"
+                      type="text"
                     />
-                    <FormHelperText>Enter your email above.</FormHelperText>
-                    <FormErrorMessage>Invalid Email!</FormErrorMessage>
+                    <FormHelperText>Choose a user name.</FormHelperText>
+                    <FormErrorMessage>{form.errors.userName}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
@@ -105,24 +95,75 @@ function SignUp({ signUp, user }) {
                       isRequired
                     >
                       <FormLabel>Password</FormLabel>
+                      {/* <Input
+                                                {...field}
+                                                type="password"
+                                                id="password"
+                                                minLength={8}
+                                                placeholder="enter your password"
+                                            /> */}
                       <InputGroup size="md">
-                      <Input
-                      {...field}
-                        id="password"
-                        minLength={8}
-                        pr="4.5rem"
-                        type={show ? "text" : "password"}
-                        placeholder="Enter password"
-                      />
-                      <InputRightElement width="4.5rem">
-                        <Button h="1.75rem" size="sm" onClick={handleClick}>
-                          {show ? "Hide" : "Show"}
-                        </Button>
-                      </InputRightElement>
-                    </InputGroup>
-                      <FormHelperText>Your password! (min 8 char)</FormHelperText>
+                        <Input
+                          {...field}
+                          id="password"
+                          minLength={8}
+                          pr="4.5rem"
+                          type={show ? "text" : "password"}
+                          placeholder="Enter password"
+                        />
+                        <InputRightElement width="4.5rem">
+                          <Button h="1.75rem" size="sm" onClick={handleClick}>
+                            {show ? "Hide" : "Show"}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+                      <FormHelperText>
+                        Your password! (min 8 char)
+                      </FormHelperText>
                       <FormErrorMessage>
                         {form.errors.password}
+                      </FormErrorMessage>
+                    </FormControl>
+                  );
+                }}
+              </Field>
+              <Field type="password" name="confirmPassword">
+                {({ field, form }) => {
+                  return (
+                    <FormControl
+                      isInvalid={
+                        form.errors.confirmPassword &&
+                        form.touched.confirmPassword
+                      }
+                      id="confirmPassword"
+                      isRequired
+                    >
+                      <FormLabel>Retype Password</FormLabel>
+                      {/* <Input
+                                                {...field}
+                                                type="password"
+                                                id="confirmPassword"
+                                                minLength={8}
+                                                placeholder="Retype your password"
+                                            /> */}
+                      <InputGroup size="md">
+                        <Input
+                          {...field}
+                          id="confirmPassword"
+                          minLength={8}
+                          pr="4.5rem"
+                          type={show ? "text" : "password"}
+                          placeholder="Confirm password"
+                        />
+                        <InputRightElement width="4.5rem">
+                          <Button h="1.75rem" size="sm" onClick={handleClick}>
+                            {show ? "Hide" : "Show"}
+                          </Button>
+                        </InputRightElement>
+                      </InputGroup>
+                      <FormHelperText>Retype Your password!</FormHelperText>
+                      <FormErrorMessage>
+                        {form.errors.confirmPassword}
                       </FormErrorMessage>
                     </FormControl>
                   );
@@ -145,4 +186,4 @@ function SignUp({ signUp, user }) {
   );
 }
 
-export default SignUp
+export default SignUp;
