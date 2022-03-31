@@ -55,10 +55,6 @@ function LogIn({ logIn, user }) {
         mx="auto"
         w={{ base: "90%", md: "70%", lg: "60%", xl: "40%" }}
       >
-        <Text fontSize="3xl" my={7} textAlign="center">
-          Login
-        </Text>
-        <Divider alignSelf="center" mb={8} w="60%" borderColor="green" />
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={LoginSchema}
@@ -129,21 +125,7 @@ function LogIn({ logIn, user }) {
             </Form>
           )}
         </Formik>
-        <Flex my={2}>
-          <Text>Don't have an account? </Text>
-          <Link href="/signup">
-            <Text style={{ cursor: "pointer" }} ml={1} color="green">
-              Sign Up here...
-            </Text>
-          </Link>
-        </Flex>
-        <Flex mt={2} mb={5}>
-          <Link href="/pass_reset">
-            <Text style={{ cursor: "pointer" }} color="green">
-              Forgot password?
-            </Text>
-          </Link>
-        </Flex>
+        
       </Flex>
     </div>
   );
