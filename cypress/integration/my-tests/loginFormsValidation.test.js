@@ -28,7 +28,7 @@ describe("Auth form renders properly", () => {
   });
 });
 
-describe("Auth form input validation", () => {
+describe("Login form input validation", () => {
   it("rejects an empty credentials", () => {
     cy.get('[data-testid="login-tab"]').click();
     cy.log("clicked login tab");
@@ -69,7 +69,7 @@ describe("Auth form input validation", () => {
     cy.get('[data-testid="login-password-error"]').should("have.text", "Too long!");
 
   });
-  it("accepts a valid user name", () => {
+  it("accepts a valid credentials", () => {
     cy.get('[data-testid="login-tab"]').click();    
     cy.log("clicked login tab");
     cy.get('[data-testid="login-form"]').should("exist");
@@ -79,4 +79,5 @@ describe("Auth form input validation", () => {
     cy.get('[data-testid="login-submit"]').click();
     cy.get('[data-testid="login-submit"]').should("be.disabled");
   });
+  
 });

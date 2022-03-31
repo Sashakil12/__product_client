@@ -12,18 +12,21 @@ import {
   useToast,
   InputGroup,
   InputRightElement,
+
 } from "@chakra-ui/react";
 
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { useNavigate, Link } from "react-router-dom";
-
+import { useMutation, useQueryClient } from "react-query";
+import axios from 'axios';
+import api from './../../utils/axios';
 const LoginSchema = Yup.object().shape({
   userName: Yup.string()
     .trim()
     .required("Required")
-    .matches(/^[0-9a-z]+$/, "You can use a-z, A-z, 0-9 only")
+    .matches("^[a-zA-Z0-9_]*$", "You can use a-z, A-z, 0-9 only")
     .min(3).max(20),
   password: Yup.string()
     .min(8, "Too short!")
@@ -32,14 +35,43 @@ const LoginSchema = Yup.object().shape({
 });
 
 //component
-function LogIn({ logIn, user }) {
+function LogIn() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
-
-  const toast = useToast();
+  const logIn = useMutation((user) => api.post("/user/login", user));
+const qC=useQueryClient()
+  const toast = useToast()
   const navigate = useNavigate();
   const handleSubmit = (val, act) => {
-    // logIn(val, toast, act.setSubmitting, router, setCookie);
+    console.log(val)
+    logIn.mutate(val, {
+      onSuccess: (data, vars, ctx) => {
+        navigate("/products");
+        console.log(data, vars, ctx);
+        localStorage.setItem("token", data.data.token);
+        qC.invalidateQueries("current_user");
+        return toast({
+          title: 'Logged in successfully...',
+          description: "",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+      },
+      onError: (error, vars, ctx) => {
+        console.log(error)
+        localStorage.removeItem("token");
+        navigate("/auth");
+        return toast({
+          title: 'Log in failed!',
+          description: "Could not lod you in!",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        });
+        
+      },
+    });
   };
 
   return (

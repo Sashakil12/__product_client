@@ -21,10 +21,16 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from 'react-query';
+import { useQueryClient } from 'react-query';
+import api from './../../utils/axios';
 
 const signUpSchema = Yup.object().shape({
-  userName: Yup.string().required("Required").trim()
-  .matches(/^[0-9a-z]+$/, "You can use a-z, A-z, 0-9 only"),
+  userName: Yup.string()
+    .trim()
+    .required("Required")
+    .matches("^[a-zA-Z0-9_]*$", "You can use a-z, A-z, 0-9 only")
+    .min(3).max(20),
   password: Yup.string()
     .trim()
     .min(8, "Too short!")
@@ -40,16 +46,51 @@ const signUpSchema = Yup.object().shape({
 });
 
 //Component
-function SignUp({ signUp, user }) {
+function SignUp() {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const toast = useToast();
-
+  const signUp = useMutation(user => api.post("/user/register", user))
+  const qC = useQueryClient()  
   const navigate = useNavigate();
 
-  const handleSubmit = (val, act) => {
+  const handleSubmit = (values, act) => {
     console.log("handle submit clicked");
-    // signUp(val, toast, act.setSubmitting, router, setCookie);
+    console.log(values);
+    delete values.confirmPassword;
+    signUp.mutate(values,{
+    
+      onSuccess:()=>{
+       navigate('/')
+       qC.invalidateQueries("current_user")
+        return  toast({
+          title: 'Signed up successfully...',
+          description: "",
+          status: 'success',
+          duration: 9000,
+          isClosable: true,
+        });
+      },
+      onError:()=>{
+       return  toast({
+        title: 'Sign up failed...',
+        description: "",
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
+      },
+      onMutate:(vars)=>{
+        toast({
+          title: 'Signing up...',
+          description: "",
+          status: 'info',
+          duration: 9000,
+          isClosable: true,
+        });
+       return  {...vars}
+      }
+    })
   };
 
   return (
@@ -77,17 +118,18 @@ function SignUp({ signUp, user }) {
                   >
                     <FormLabel htmlFor="email">User name:</FormLabel>
                     <Input
+                    data-testid="signup-username"
                       {...field}
                       id="signup-username"
                       placeholder="enter user name"
                       type="text"
                     />
                     <FormHelperText>Choose a user name.</FormHelperText>
-                    <FormErrorMessage>{form.errors.userName}</FormErrorMessage>
+                    <FormErrorMessage data-testid="signup-user-error">{form.errors.userName}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
-              <Field type="password" name="password" data-testid="signup-password">
+              <Field type="password" name="password" >
                 {({ field, form }) => {
                   return (
                     <FormControl
@@ -105,6 +147,7 @@ function SignUp({ signUp, user }) {
                                             /> */}
                       <InputGroup size="md">
                         <Input
+                        data-testid="signup-password"
                           {...field}
                           id="password"
                           minLength={8}
@@ -121,14 +164,14 @@ function SignUp({ signUp, user }) {
                       <FormHelperText>
                         Your password! (min 8 char)
                       </FormHelperText>
-                      <FormErrorMessage>
+                      <FormErrorMessage data-testid="signup-password-error">
                         {form.errors.password}
                       </FormErrorMessage>
                     </FormControl>
                   );
                 }}
               </Field>
-              <Field type="password" name="confirmPassword" data-testid="signup-confirm">
+              <Field type="password" name="confirmPassword" >
                 {({ field, form }) => {
                   return (
                     <FormControl
@@ -150,6 +193,7 @@ function SignUp({ signUp, user }) {
                       <InputGroup size="md">
                         <Input
                           {...field}
+                          data-testid="signup-confirm"
                           id="confirmPassword"
                           minLength={8}
                           pr="4.5rem"
@@ -163,7 +207,7 @@ function SignUp({ signUp, user }) {
                         </InputRightElement>
                       </InputGroup>
                       <FormHelperText>Retype Your password!</FormHelperText>
-                      <FormErrorMessage>
+                      <FormErrorMessage data-testid="signup-confirm-error">
                         {form.errors.confirmPassword}
                       </FormErrorMessage>
                     </FormControl>
@@ -172,6 +216,7 @@ function SignUp({ signUp, user }) {
               </Field>
               <Button
               data-testid="signup-submit"
+              
                 leftIcon={<ChevronRightIcon />}
                 mt={10}
                 colorScheme="green"
