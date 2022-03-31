@@ -55,6 +55,7 @@ function SignUp({ signUp, user }) {
   return (
     <div>
       <Flex
+      data-testid="signup-form"
         justify="start"
         direction="column"
         mx="auto"
@@ -67,7 +68,7 @@ function SignUp({ signUp, user }) {
         >
           {({ isSubmitting }) => (
             <Form>
-               <Field type="text" name="userName">
+               <Field type="text" name="userName" data-testid="signup-username">
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={form.errors.userName && form.touched.userName}
@@ -86,7 +87,7 @@ function SignUp({ signUp, user }) {
                   </FormControl>
                 )}
               </Field>
-              <Field type="password" name="password">
+              <Field type="password" name="password" data-testid="signup-password">
                 {({ field, form }) => {
                   return (
                     <FormControl
@@ -127,7 +128,7 @@ function SignUp({ signUp, user }) {
                   );
                 }}
               </Field>
-              <Field type="password" name="confirmPassword">
+              <Field type="password" name="confirmPassword" data-testid="signup-confirm">
                 {({ field, form }) => {
                   return (
                     <FormControl
@@ -170,6 +171,7 @@ function SignUp({ signUp, user }) {
                 }}
               </Field>
               <Button
+              data-testid="signup-submit"
                 leftIcon={<ChevronRightIcon />}
                 mt={10}
                 colorScheme="green"

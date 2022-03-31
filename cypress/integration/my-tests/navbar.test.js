@@ -52,7 +52,7 @@ describe("navbar navigates", () => {
       
         cy.get('[data-testid="login-link"]').click()
         cy.then(() => {
-            cy.url().should('include', '/login')
+            cy.url().should('include', '/auth')
         })
     
       })  

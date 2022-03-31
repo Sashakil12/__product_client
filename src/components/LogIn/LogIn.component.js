@@ -23,7 +23,8 @@ const LoginSchema = Yup.object().shape({
   userName: Yup.string()
     .trim()
     .required("Required")
-    .matches(/^[0-9a-z]+$/, "You can use a-z, A-z, 0-9 only"),
+    .matches(/^[0-9a-z]+$/, "You can use a-z, A-z, 0-9 only")
+    .min(3).max(20),
   password: Yup.string()
     .min(8, "Too short!")
     .max(16, "Too long!")
@@ -44,6 +45,7 @@ function LogIn({ logIn, user }) {
   return (
     <div>
       <Flex
+        data-testid="login-form"
         justify="start"
         direction="column"
         mx="auto"
@@ -56,7 +58,7 @@ function LogIn({ logIn, user }) {
         >
           {({ isSubmitting }) => (
             <Form>
-              <Field type="text" name="userName">
+              <Field type="text" name="userName" >
                 {({ field, form }) => (
                   <FormControl
                     isInvalid={form.errors.userName && form.touched.userName}
@@ -66,16 +68,21 @@ function LogIn({ logIn, user }) {
                     <FormLabel htmlFor="email">User name:</FormLabel>
                     <Input
                       {...field}
+                      data-testid="login-username"
                       id="login-username"
                       placeholder="enter user name"
                       type="text"
                     />
                     <FormHelperText>Choose a user name.</FormHelperText>
-                    <FormErrorMessage>{form.errors.userName}</FormErrorMessage>
+                    <FormErrorMessage data-testid="login-user-error">{form.errors.userName}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
-              <Field type="password" name="password">
+              <Field
+                type="password"
+                name="password"
+                
+              >
                 {({ field, form }) => {
                   return (
                     <FormControl
@@ -86,6 +93,7 @@ function LogIn({ logIn, user }) {
                       <FormLabel>Password</FormLabel>
                       <InputGroup size="md">
                         <Input
+                        data-testid="login-password"
                           {...field}
                           id="login-password-label"
                           minLength={8}
@@ -102,7 +110,7 @@ function LogIn({ logIn, user }) {
                       <FormHelperText>
                         Your password! (min 8 char)
                       </FormHelperText>
-                      <FormErrorMessage>
+                      <FormErrorMessage data-testid="login-password-error">
                         {form.errors.password}
                       </FormErrorMessage>
                     </FormControl>
@@ -110,6 +118,7 @@ function LogIn({ logIn, user }) {
                 }}
               </Field>
               <Button
+                data-testid="login-submit"
                 leftIcon={<ChevronRightIcon />}
                 mt={10}
                 colorScheme="green"
