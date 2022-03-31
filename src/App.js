@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import "./App.css";
+import { Box, Flex } from "@chakra-ui/react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar.component.js";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Navbar/>
+      <Flex>
+        <Box h="100vh" bg="darkgray" width="15vw">
+          Sidebar
+        </Box>
+        <Box h="100vh" bg="white" width="90vw">
+          main
+        </Box>
+      </Flex>
+    </>
   );
 }
 
