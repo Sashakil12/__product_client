@@ -13,7 +13,7 @@ import SignUp from "./../../components/Register/Register.component";
 function Auth() {
   return (
     <Center mt="3vh" minW="80vw">
-      <Tabs>
+      <Tabs data-testid="auth-tab">
         <TabList justifyContent={"center"}>
           <Tab>Log In</Tab>
           <Tab>Sign Up</Tab>

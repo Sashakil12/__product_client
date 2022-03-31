@@ -8,7 +8,7 @@ describe('Homepage', () => {
   
     it('renders nav bar', () => {
       
-      cy.get('[data-testId="navbar"]').should('exist')
+      cy.get('[data-testid="navbar"]').should('exist')
   
     })
 })

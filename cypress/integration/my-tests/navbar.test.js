@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 describe("navbar has links", () => {
     beforeEach(() => {
 
@@ -6,22 +7,22 @@ describe("navbar has links", () => {
   
     it.only('to home', () => {
       
-        cy.get('[data-testId="home-link"]').should('exist')
+        cy.get('[data-testid="home-link"]').should('exist')
     
       })  
       it.only('to products', () => {
       
-        cy.get('[data-testId="products-link"]').should('exist')
+        cy.get('[data-testid="products-link"]').should('exist')
     
       })  
       it.only('to login', () => {
       
-        cy.get('[data-testId="login-link"]').should('exist')
+        cy.get('[data-testid="login-link"]').should('exist')
     
       })  
       it.only('to logout', () => {
       
-        cy.get('[data-testId="logout-link"]').should('exist')
+        cy.get('[data-testid="logout-link"]').should('exist')
     
       })  
 })
@@ -33,7 +34,7 @@ describe("navbar navigates", () => {
   
     it.only('to home', () => {
       
-        cy.get('[data-testId="home-link"]').click()
+        cy.get('[data-testid="home-link"]').click()
         cy.then(() => {
             cy.url().should('include', '/')
         })
@@ -41,7 +42,7 @@ describe("navbar navigates", () => {
       })  
       it.only('to products', () => {
       
-        cy.get('[data-testId="products-link"]').click()
+        cy.get('[data-testid="products-link"]').click()
         cy.then(() => {
             cy.url().should('include', '/products')
         })
@@ -49,7 +50,7 @@ describe("navbar navigates", () => {
       })  
       it.only('to login', () => {
       
-        cy.get('[data-testId="login-link"]').click()
+        cy.get('[data-testid="login-link"]').click()
         cy.then(() => {
             cy.url().should('include', '/login')
         })
@@ -57,7 +58,7 @@ describe("navbar navigates", () => {
       })  
       it.only('to logout', () => {
       
-        cy.get('[data-testId="logout-link"]').click()
+        cy.get('[data-testid="logout-link"]').click()
         cy.then(() => {
             cy.url().should('include', '/logout')
         })
