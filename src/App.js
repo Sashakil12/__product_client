@@ -1,20 +1,26 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { Box, Flex } from "@chakra-ui/react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar.component.js";
+import Home from "./pages/Home/Home.page.js";
+import Products from "./pages/Products/Products.page";
+import Login from "./pages/Login/Login.page";
 function App() {
   return (
     <>
-    <Navbar/>
-      <Flex>
-        <Box h="100vh" bg="darkgray" width="15vw">
-          Sidebar
-        </Box>
-        <Box h="100vh" bg="white" width="90vw">
-          main
-        </Box>
-      </Flex>
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={<Home />}>
+          
+        </Route>
+        <Route path="/products" element={<Products />}>
+          
+        </Route>
+        <Route path="/login" element={<Login />}>
+          
+        </Route>
+      </Routes>
     </>
   );
 }
