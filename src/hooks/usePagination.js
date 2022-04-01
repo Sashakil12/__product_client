@@ -1,12 +1,12 @@
 import { useState } from 'react';
 
 export default function(defaultLimit, defaultSkip){
-    const [limit, setlimit] = useState(defaultLimit);
-    const [skip, setskip] = useState(defaultSkip)
+    const [limit, setLimit] = useState(defaultLimit);
+    const [skip, setSkip] = useState(defaultSkip)
         return{
             limit,
             skip,
-            setlimit,
-            setskip
+            setLimit,
+            setSkip
         }
 }

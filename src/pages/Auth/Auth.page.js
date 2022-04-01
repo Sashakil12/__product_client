@@ -13,23 +13,21 @@ import { AuthContext } from "../../context/authContext.js";
 
 function Auth() {
   return (
-    <Center mt="3vh" minW="80vw">
-      <Tabs data-testid="auth-tab">
-        <TabList justifyContent={"center"}>
-          <Tab data-testid="login-tab">Log In</Tab>
-          <Tab data-testid="signup-tab">Sign Up</Tab>
-        </TabList>
+    <Tabs data-testid="auth-tab">
+      <TabList justifyContent={"center"}>
+        <Tab data-testid="login-tab">Log In</Tab>
+        <Tab data-testid="signup-tab">Sign Up</Tab>
+      </TabList>
 
-        <TabPanels>
-          <TabPanel>
-            <LogIn />
-          </TabPanel>
-          <TabPanel>
-            <SignUp />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </Center>
+      <TabPanels>
+        <TabPanel>
+          <LogIn />
+        </TabPanel>
+        <TabPanel>
+          <SignUp />
+        </TabPanel>
+      </TabPanels>
+    </Tabs>
   );
 }
 

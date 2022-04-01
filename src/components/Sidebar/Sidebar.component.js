@@ -8,7 +8,7 @@ function Sidebar() {
       <Flex
         h="100vh"
         bg="blackAlpha.800"
-        width="25vw"
+        minW="170px"
         direction="column"
         justify={"start"}
         align="start"

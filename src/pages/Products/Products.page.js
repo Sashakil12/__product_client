@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from './../../context/authContext';
 import Sidebar from "../../components/Sidebar/Sidebar.component";
+import ProductsTable from './../../components/ProductsTable/ProductsTable.component';
 
 function Products() {
   const navigate = useNavigate();
@@ -17,11 +18,9 @@ function Products() {
   }, [auth]);
 
   return (
-    <Flex>
+    <Flex >
       <Sidebar/>
-      <Box h="100vh" bg="white" width="90vw">
-        main
-      </Box>
+      <ProductsTable/>
     </Flex>
   );
 }
