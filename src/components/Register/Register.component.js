@@ -62,8 +62,8 @@ function SignUp() {
     
       onSuccess:()=>{
        navigate('/')
-       qC.invalidateQueries("current_user")
-        return  toast({
+       qC.invalidateQueries("current_user") 
+       return  toast({
           title: 'Signed up successfully...',
           description: "",
           status: 'success',

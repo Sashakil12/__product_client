@@ -56,12 +56,5 @@ describe("navbar navigates", () => {
         })
     
       })  
-      it.only('to logout', () => {
-      
-        cy.get('[data-testid="logout-link"]').click()
-        cy.then(() => {
-            cy.url().should('include', '/logout')
-        })
-    
-      })  
+        
 })

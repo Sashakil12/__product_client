@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   FormControl,
   FormLabel,
@@ -22,6 +22,8 @@ import { useNavigate, Link } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import axios from 'axios';
 import api from './../../utils/axios';
+
+import { AuthContext } from './../../context/authContext';
 const LoginSchema = Yup.object().shape({
   userName: Yup.string()
     .trim()
@@ -42,6 +44,7 @@ function LogIn() {
 const qC=useQueryClient()
   const toast = useToast()
   const navigate = useNavigate();
+  const {authenticated, setauthenticated}=useContext(AuthContext)
   const handleSubmit = (val, act) => {
     console.log(val)
     logIn.mutate(val, {
@@ -49,6 +52,7 @@ const qC=useQueryClient()
         navigate("/products");
         console.log(data, vars, ctx);
         localStorage.setItem("token", data.data.token);
+        setauthenticated(true)
         qC.invalidateQueries("current_user");
         return toast({
           title: 'Logged in successfully...',
@@ -61,6 +65,7 @@ const qC=useQueryClient()
       onError: (error, vars, ctx) => {
         console.log(error)
         localStorage.removeItem("token");
+        setauthenticated(false)
         navigate("/auth");
         return toast({
           title: 'Log in failed!',

@@ -32,6 +32,7 @@ describe("Login flow works properly", () => {
       expect(response.statusCode).to.eq(200);
     });
     cy.contains("Logged in successfully...").should("exist");
+    cy.get('[data-testid="login-link"]').should("not.exist");
     
   })
 });
