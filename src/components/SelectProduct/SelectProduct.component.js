@@ -15,9 +15,13 @@ function SelectProduct({ id }) {
     }
     return;
   };
+  console.log(id)
   return (
     <>
-      <Checkbox mx="1" onChange={handleClicked} />
+      <Checkbox 
+      isChecked={productCtx.selected.includes(id)}
+        mx="1" 
+        onChange={handleClicked} />
     </>
   );
 }

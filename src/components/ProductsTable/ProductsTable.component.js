@@ -103,7 +103,7 @@ function ProductsTable() {
         </Flex>
         <Flex m="2vh" justify={"start"}>
           <AddProduct/>
-          <DeleteProduct/>
+          <DeleteProduct limit={limit} skip={skip}/>
         </Flex>
       </TableContainer>
     </Box>
