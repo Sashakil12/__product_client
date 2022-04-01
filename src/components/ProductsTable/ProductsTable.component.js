@@ -26,6 +26,7 @@ import AddProduct from "../AddProduct/AddProduct.component";
 import DeleteProduct from "../DeleteProduct/DeleteProduct.components";
 import productContext from './../../context/productContext';
 import SelectProduct from './../SelectProduct/SelectProduct.component';
+import UpdateProduct from './../UpdateProduct/UpdateProduct.components';
 
 function ProductsTable() {
   const { limit, skip, setSkip, setLimit } = usePagination(10, 0);
@@ -66,6 +67,7 @@ function ProductsTable() {
                 <Th isNumeric>Unit Price</Th>
                 <Th>Status</Th>
                 <Th>Available since</Th>
+                <Th>Action</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -78,6 +80,7 @@ function ProductsTable() {
                       <Td isNumeric>{product.unitPrice}</Td>
                       <Td>{product.status}</Td>
                       <Td>{dayjs(product.createdAt).format("DD/MM/YYYY")}</Td>
+                      <Td><UpdateProduct limit={limit} skip={skip} key={"update"+i} product={product}/></Td>
                     </Tr>
                   
                 </>

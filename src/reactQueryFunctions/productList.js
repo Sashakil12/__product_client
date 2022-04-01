@@ -26,18 +26,32 @@ export async function addProduct(val) {
   }
 }
 
-export async function deleteProduct({ids:val, setSelected}) {
+export async function deleteProduct({ ids: val, setSelected }) {
   try {
     console.log("delete-products", val);
     let res;
     if (!val.length) throw new Error("No product selected");
     if (val.length < 2) {
-      console.log("single call")
+      console.log("single call");
       res = await api.delete(`/product/${val[0]}`);
-    }else{
-      res = await api.delete(`/product/multiple`, { data:{ids: val} });
+    } else {
+      res = await api.delete(`/product/multiple`, { data: { ids: val } });
     }
-    setSelected([])
+    setSelected([]);
+    console.log(res);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+    return e;
+  }
+}
+
+export async function updateProduct({values, _id}) {
+  try {
+    console.log("update-products", values);
+    
+    const res = await api.patch(`/product/${_id}`, values);
+
     console.log(res);
     return res.data;
   } catch (e) {

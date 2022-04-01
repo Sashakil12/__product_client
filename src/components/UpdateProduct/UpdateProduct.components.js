@@ -16,87 +16,93 @@ import {
   FormErrorMessage,
   Input,
 } from "@chakra-ui/react";
-import { PlusSquareIcon} from "@chakra-ui/icons";
+import { PlusSquareIcon } from "@chakra-ui/icons";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQueryClient } from "react-query";
-import { addProduct } from "../../reactQueryFunctions/productList";
+import {
+  addProduct,
+  updateProduct,
+} from "../../reactQueryFunctions/productList";
 
 const PRODUCT_SCHEMA = Yup.object().shape({
   name: Yup.string()
     .trim()
-    .required("Required")
     .test(
       "len",
       "Must be at least 5 characters",
       (val) => val && val.length >= 5
     ),
-  categoryId: Yup.number().required("Required").min(1),
+  categoryId: Yup.number().min(1),
   categoryName: Yup.string()
-    .required("Required")
     .trim()
     .test(
       "len",
       "Must be at least 3 characters",
       (val) => val && val.length >= 3
     ),
-  unitPrice: Yup.number().required("Required").min(1),
-  status: Yup.mixed().required("Required").oneOf(["available", "discontinued"]),
+  unitPrice: Yup.number().min(1),
+  status: Yup.mixed().oneOf(["available", "discontinued"]),
 });
 
-function AddProduct( ) {
+function UpdateProduct({ product, limit, skip }) {
+  const { _id, __v, createdAt, updatedAt, ...initVal } = product;
   const toast = createStandaloneToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const add = useMutation("add-product", addProduct);
-
+  const update = useMutation("update-product", updateProduct);
   const qC = useQueryClient();
-
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
-    add.mutate(values, {
-      onSuccess: (data, vars, ctx) => {
-        console.log(data, vars, ctx);
-        qC.setQueriesData("fetch-products", (old=[]) => [data, ...(old || [])]);
-        return toast({
-          title: "Saved product successfully...",
-          description: "",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-      },
-      onError: (error, vars, ctx) => {
-        return toast({
-          title: "Could not save...",
-          description: "",
-          status: "error",
-          duration: 9000,
-          isClosable: true,
-        });
-      },
-    });
+    update.mutate(
+      { values, _id },
+      {
+        onSuccess: (data, vars, ctx) => {
+          console.log("update success", data, vars, ctx);
+
+          qC.setQueriesData(["fetch-products", limit, skip], (old = []) => {
+            return [...old.map((el) => (el._id === data._id ? data : el))];
+          });
+          return toast({
+            title: "Saved product successfully...",
+            description: "",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+        },
+        onError: (error, vars, ctx) => {
+          return toast({
+            title: "Could not save...",
+            description: "",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+          });
+        },
+      }
+    );
   };
+
   return (
     <>
-      <Button bg="green.500" color="white" onClick={onOpen} m="1px">
-        Add Product
+      <Button
+        outline={false}
+        color="blue.500"
+        variant={"unstyled"}
+        onClick={onOpen}
+        m="1px"
+      >
+        Update
       </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Add Product</ModalHeader>
+          <ModalHeader>Update Product</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Formik
-              initialValues={{
-                name: "",
-                categoryId: "",
-                categoryName: "",
-                unitPrice: "",
-                status: "",
-              }}
+              initialValues={{ ...initVal }}
               validationSchema={PRODUCT_SCHEMA}
               //  validate={()=>({})}
               onSubmit={onFinish}
@@ -110,7 +116,6 @@ function AddProduct( ) {
                         <FormControl
                           isInvalid={form.errors.name}
                           id="add-product-name"
-                          isRequired
                         >
                           <FormLabel htmlFor="name">Name</FormLabel>
                           <Input
@@ -158,7 +163,6 @@ function AddProduct( ) {
                         <FormControl
                           isInvalid={form.errors.categoryName}
                           id="add-product-categoryName"
-                          isRequired
                         >
                           <FormLabel htmlFor="name">Category Name</FormLabel>
                           <Input
@@ -202,7 +206,6 @@ function AddProduct( ) {
                           <FormControl
                             isInvalid={form.errors.status}
                             id="add-product-status"
-                            isRequired
                           >
                             <FormLabel htmlFor="status">Status</FormLabel>
                             <Select
@@ -226,7 +229,7 @@ function AddProduct( ) {
                       leftIcon={<PlusSquareIcon />}
                       mt={10}
                       colorScheme="green"
-                      isLoading={add.isLoading}
+                      isLoading={update.isLoading}
                       type="submit"
                     >
                       Save
@@ -242,4 +245,4 @@ function AddProduct( ) {
   );
 }
 
-export default AddProduct;
+export default UpdateProduct;
