@@ -1,12 +1,34 @@
 import React from "react";
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex, Box, Button } from "@chakra-ui/react";
+import { HamburgerIcon, PhoneIcon } from "@chakra-ui/icons";
+
 function Sidebar() {
   return (
     <>
-      <Flex direction="row" justify={["center"]}>
-        <Box>
-            
-        </Box>
+      <Flex
+        h="100vh"
+        bg="blackAlpha.800"
+        width="25vw"
+        direction="column"
+        justify={"start"}
+        align="start"
+      >
+        <Button
+          color={"white"}
+          ml="2vw"
+          variant="unstyled"
+          leftIcon={<HamburgerIcon color={"white"} />}
+        >
+          Product List
+        </Button>
+        <Button
+          color={"white"}
+          ml="2vw"
+          variant="unstyled"
+          leftIcon={<PhoneIcon color={"white"} />}
+        >
+          Contacts
+        </Button>
       </Flex>
     </>
   );
