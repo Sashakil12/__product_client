@@ -49,11 +49,12 @@ const qC=useQueryClient()
     console.log(val)
     logIn.mutate(val, {
       onSuccess: (data, vars, ctx) => {
-        navigate("/products");
+        
         console.log(data, vars, ctx);
         localStorage.setItem("token", data.data.token);
         setauthenticated(true)
         qC.invalidateQueries("current_user");
+        navigate("/products");
         return toast({
           title: 'Logged in successfully...',
           description: "",
@@ -120,8 +121,7 @@ const qC=useQueryClient()
                 name="password"
                 
               >
-                {({ field, form }) => {
-                  return (
+                {({ field, form }) =>(
                     <FormControl
                       isInvalid={form.errors.password && form.touched.password}
                       id="login-password"
@@ -151,8 +151,8 @@ const qC=useQueryClient()
                         {form.errors.password}
                       </FormErrorMessage>
                     </FormControl>
-                  );
-                }}
+                  )
+                }
               </Field>
               <Button
                 data-testid="login-submit"

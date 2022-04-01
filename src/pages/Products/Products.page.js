@@ -1,7 +1,9 @@
 import React from 'react'
 import { Flex,Box } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function Products() {
+function Products({auth}) {
   return (
     <Flex>
     <Box h="100vh" bg="darkgray" width="15vw">

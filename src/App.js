@@ -8,17 +8,18 @@ import Navbar from "./components/Navbar/Navbar.component.js";
 import Home from "./pages/Home/Home.page.js";
 import Products from "./pages/Products/Products.page";
 import Auth from "./pages/Auth/Auth.page";
-import { AuthContext } from "./context/authContext";
+import { AuthContext, useAuth } from "./context/authContext";
 
 function App() {
   const [authenticated, setauthenticated] = useState(false);
+  const ProductWithAuth = useAuth(Products);
   return (
     <>
       <AuthContext.Provider value={{ authenticated, setauthenticated }}>
         <Navbar />
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
-          <Route path="/products" element={<Products />}></Route>
+          <Route path="/products" element={<ProductWithAuth/>}></Route>
           <Route path="/auth" element={<Auth />}></Route>
         </Routes>
       </AuthContext.Provider>
