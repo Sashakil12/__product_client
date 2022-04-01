@@ -20,11 +20,7 @@ describe("navbar has links", () => {
         cy.get('[data-testid="login-link"]').should('exist')
     
       })  
-      it.only('to logout', () => {
       
-        cy.get('[data-testid="logout-link"]').should('exist')
-    
-      })  
 })
 describe("navbar navigates", () => {
     beforeEach(() => {
