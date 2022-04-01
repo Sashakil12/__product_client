@@ -7,7 +7,7 @@ export async function getPublicProducts({ queryKey }) {
       console.log(res);
       return res.data;
     } catch (e) {
-        console.log(e)
+      console.log(e);
       return e;
     }
   }

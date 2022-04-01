@@ -22,6 +22,7 @@ import { useQuery } from "react-query";
 import { fetchProducts } from "../../reactQueryFunctions/productList";
 import dayjs from "dayjs";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
+import AddProduct from "../AddProduct/AddProduct.component";
 
 function ProductsTable() {
   const { limit, skip, setSkip, setLimit } = usePagination(10, 0);
@@ -100,14 +101,7 @@ function ProductsTable() {
           </Button>
         </Flex>
         <Flex m="2vh" justify={"start"}>
-          <Button
-            bg="green.500"
-            color="white"
-            onClick={() => setSkip(skip === 0 ? 0 : skip - limit)}
-            m="1px"
-          >
-            Add Product
-          </Button>
+          <AddProduct/>
           <Button
             color="white"
             bg="red.500"

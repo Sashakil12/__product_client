@@ -11,3 +11,17 @@ export async function fetchProducts({ queryKey }) {
       return e;
     }
   }
+
+
+  
+export async function addProduct(val) {
+  try {
+    console.log("add-products", val);
+    const res = await api.post(`/product/add`, val);
+    console.log(res);
+    return res.data;
+  } catch (e) {
+      console.log(e)
+    return e;
+  }
+}
