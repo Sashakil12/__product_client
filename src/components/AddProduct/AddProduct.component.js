@@ -109,7 +109,7 @@ function AddProduct( ) {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.name}
-                          id="add-product-name"
+                          id="add-product-name-field"
                           isRequired
                         >
                           <FormLabel htmlFor="name">Name</FormLabel>
@@ -131,7 +131,7 @@ function AddProduct( ) {
                         return (
                           <FormControl
                             isInvalid={form.errors.categoryId}
-                            id="add-product-categoryId"
+                            id="add-product-categoryId-field"
                           >
                             <FormLabel htmlFor="categoryId">
                               Category Id
@@ -157,7 +157,7 @@ function AddProduct( ) {
                       {({ field, form }) => (
                         <FormControl
                           isInvalid={form.errors.categoryName}
-                          id="add-product-categoryName"
+                          id="add-product-categoryName-field"
                           isRequired
                         >
                           <FormLabel htmlFor="name">Category Name</FormLabel>
@@ -210,8 +210,8 @@ function AddProduct( ) {
                               id="add-product-status-inp"
                               {...field}
                             >
-                              <option value="available">Available</option>
-                              <option value="discontinued">Discontinued</option>
+                              <option data-testid="available" value="available">Available</option>
+                              <option data-testid="discontinued" value="discontinued">Discontinued</option>
                             </Select>
 
                             <FormErrorMessage>

@@ -8,6 +8,6 @@ export async function getPublicProducts({ queryKey }) {
       return res.data;
     } catch (e) {
       console.log(e);
-      return e;
+      throw new Error(e)
     }
   }

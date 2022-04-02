@@ -41,14 +41,14 @@ function ProductsTable() {
   }
   if (products.isError) {
     return (
-      <Center>
-        <Text fontSize="lg">Sorry! Can't not show products</Text>
-      </Center>
+      <Flex justify="center">
+        <Text mx="auto" fontSize="lg">{products.error.message||"Sorry! Can't not show products"}</Text>
+      </Flex>
     );
   }
 
   return (
-    <Box bg="white" width="90vw">
+    <Box data-testid="product-table" bg="white" width="90vw">
       <TableContainer>
         {products.data.length === 0 ? (
           <Center>
@@ -105,8 +105,8 @@ function ProductsTable() {
           </Button>
         </Flex>
         <Flex m="2vh" justify={"start"}>
-          <AddProduct/>
-          <DeleteProduct limit={limit} skip={skip}/>
+          <AddProduct data-testid="add-product"/>
+          <DeleteProduct data-testid="delete-product" limit={limit} skip={skip}/>
         </Flex>
       </TableContainer>
     </Box>

@@ -10,7 +10,7 @@ export async function fetchProducts({ queryKey }) {
     return res.data;
   } catch (e) {
     console.log(e);
-    return e;
+    throw new Error(e)
   }
 }
 
@@ -22,7 +22,7 @@ export async function addProduct(val) {
     return res.data;
   } catch (e) {
     console.log(e);
-    return e;
+    throw new Error(e)
   }
 }
 
@@ -42,7 +42,7 @@ export async function deleteProduct({ ids: val, setSelected }) {
     return res.data;
   } catch (e) {
     console.log(e);
-    return e;
+    throw new Error(e)
   }
 }
 
@@ -56,6 +56,6 @@ export async function updateProduct({values, _id}) {
     return res.data;
   } catch (e) {
     console.log(e);
-    return e;
+    throw new Error(e)
   }
 }
