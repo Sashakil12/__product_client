@@ -4,9 +4,18 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AuthContext } from "./../../context/authContext";
 import LogOut from './../LogOut/LogOut.component';
+import { hasAuthenticatedUser } from './../../utils/hasUser';
 
 function Navbar() {
-  
+    const authCtx = useContext(AuthContext)
+    useEffect(()=>{
+      if(hasAuthenticatedUser()){
+        return authCtx.setauthenticated(true)
+      }else{
+        return authCtx.setauthenticated(false)
+      }
+      return 
+    },[])
   return (
     <AuthContext.Consumer>
       {({ authenticated, setauthenticated }) => {
