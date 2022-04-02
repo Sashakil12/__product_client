@@ -11,5 +11,10 @@ describe('Homepage', () => {
       cy.get('[data-testid="navbar"]').should('exist')
   
     })
+    it('check product card exists', () => {
+      
+      cy.get('[data-testid="product-card"]').should('exist')
+  
+    })
 })
 

@@ -31,7 +31,7 @@ function Home() {
     <>
       <Flex justify="center">
         {products.data.map((product, i) => (
-          <ProductCard key={i} product={product} />
+          <ProductCard data-test="product-card" key={i} product={product} />
         ))}
       </Flex>
     </>
