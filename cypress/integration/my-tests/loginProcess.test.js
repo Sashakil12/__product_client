@@ -33,6 +33,8 @@ describe("Login flow works properly", () => {
     });
     cy.contains("Logged in successfully...").should("exist");
     cy.get('[data-testid="login-link"]').should("not.exist");
-    
+    cy.contains('log out').should('exist')
+  
   })
+   
 });

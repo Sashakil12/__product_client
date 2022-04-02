@@ -2,15 +2,11 @@ import React, { useContext } from "react";
 import { Flex, Box } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { sessionInit } from "./../../utils/sessionInit";
 import { AuthContext } from "./../../context/authContext";
 import LogOut from './../LogOut/LogOut.component';
 
 function Navbar() {
-  // useEffect(()=>{
-  // //  sessionInit()
-  // },[authenticated])
-  // console.log(authenticated)
+  
   return (
     <AuthContext.Consumer>
       {({ authenticated, setauthenticated }) => {

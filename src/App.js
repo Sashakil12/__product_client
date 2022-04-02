@@ -13,6 +13,7 @@ import ErrorBoundary from "./ErrorBoundary/ErrorBoundary.component";
 
 function App() {
   const [authenticated, setauthenticated] = useState(false);
+  
   return (
     <>
       <AuthContext.Provider value={{ authenticated, setauthenticated }}>

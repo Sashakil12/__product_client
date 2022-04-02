@@ -1,7 +1,3 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
@@ -16,7 +12,12 @@ You may also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
+Launches the test runner in the interactive watch mode.
+
+Populate *./cypress.env.json* with your user name and password that is already registered with the api otherwise please run *./cypress/integration/my-tests/signUpFormValidation.tests.js* file first.
+
+**!!!Note:** Avoid running cypres in headless mode as potential behavior of such action is not tested yet.
+ 
 
 ### `npm run build`
 

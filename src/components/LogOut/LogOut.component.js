@@ -6,7 +6,7 @@ import { AuthContext } from './../../context/authContext';
 function LogOut() {
   const { setauthenticated } = useContext(AuthContext);
   return (
-    <Box onClick={()=>setauthenticated(false)} color="white"> log out</Box>
+    <Box cursor={"pointer"} onClick={()=>setauthenticated(false)} color="white"> log out</Box>
   )
 }
 
