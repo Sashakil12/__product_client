@@ -14,9 +14,8 @@ function Products() {
     if (!auth.authenticated) {
       return navigate("/auth");
     }
-
     return;
-  }, [auth]);
+  }, []);
 const [selected, setSelected] = useState([])
   return (
     <Flex>
