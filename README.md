@@ -22,4 +22,6 @@ Populate *./cypress.env.json* with your user name and password that is already r
 ### `npm run build`
 
 Builds the app for production to the `build` folder.\
-
+*Make Sure* you have the api running at port **8080**
+*Its better* to run the tests for the api first otherwise
+*Make Sure* you have seeded the api with product data before running *homepage.test.js* and *checkAuthenticatedProducts.test.js* 
